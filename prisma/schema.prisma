@@ -1,0 +1,32 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model image_metadata {
+  id                 Int     @id @default(autoincrement())
+  sku                String? @db.Text
+  color_option       String? @db.Text
+  product_id_magento Int?
+  combine_swatch     String? @db.Text
+  img_url            String? @db.Text
+  img_overlay        String? @db.Text
+  secure_url         String? @db.Text
+  img_128 String? @db.Text
+  img_256 String? @db.Text
+  img_384 String? @db.Text
+  img_512 String? @db.Text
+  img_768 String? @db.Text
+  img_1024 String? @db.Text
+  img_1920 String? @db.Text
+  created_at         String? @db.Text
+}
+
+model color_option {
+    id       Int    @id @default(autoincrement())
+    color_hsl String @unique @db.VarChar(255)
+}
