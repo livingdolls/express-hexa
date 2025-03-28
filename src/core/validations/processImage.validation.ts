@@ -1,11 +1,12 @@
-import { z } from 'zod';
+import { object, TypeOf, z } from 'zod';
 
-export const ColorOptionSchema = z.string().regex(/^\d+-\d+-\d+$/);
-export type ColorOption = z.infer<typeof ColorOptionSchema>;
+export const ProcessImageRequestSchema = z.object({
+  body: object({
+    colorOption: z.string().regex(/^\d+-\d+-\d+$/),
+    backgroundPath: z.string().min(1),
+    overlayPath: z.string().min(1),
+    dimension: z.number().int().positive()
+  })
+})
 
-export interface ImageProcessingParams {
-  colorOption: ColorOption;
-  backgroundPath: string;
-  overlayPath: string;
-  dimension: number;
-}
+export type ProcessImageHttpRequest = TypeOf<typeof ProcessImageRequestSchema>['body'];
