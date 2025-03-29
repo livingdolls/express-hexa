@@ -3,7 +3,9 @@ import { HslUseCases } from "../../application/hsl.usecases";
 import { z } from 'zod';
 
 export class HslController {
-    constructor(private readonly hslUseCase: HslUseCases) {}
+    constructor(
+      private readonly hslUseCase: HslUseCases,
+    ) {}
 
     async getColorByHsl(req: Request, res: Response) : Promise<void> {
         try {

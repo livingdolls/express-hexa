@@ -12,6 +12,8 @@
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^6.5.0",
+    "amqp-connection-manager": "^4.1.14",
+    "amqplib": "^0.10.5",
     "canvas": "^3.1.0",
     "express": "^4.21.2",
     "nodemon": "^3.1.9",
@@ -19,6 +21,7 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
+    "@types/amqplib": "^0.10.7",
     "@types/express": "^5.0.1",
     "@types/node": "^22.13.14",
     "ts-node-dev": "^2.0.0",

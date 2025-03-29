@@ -5,7 +5,8 @@ export const ProcessImageRequestSchema = z.object({
     colorOption: z.string().regex(/^\d+-\d+-\d+$/),
     backgroundPath: z.string().min(1),
     overlayPath: z.string().min(1),
-    dimension: z.number().int().positive()
+    dimension: z.number().int().positive(),
+    waitForResult: z.boolean().optional().default(false)
   })
 })
 
