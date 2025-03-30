@@ -6,6 +6,8 @@ export const ProcessImageRequestSchema = z.object({
     backgroundPath: z.string().min(1),
     overlayPath: z.string().min(1),
     dimension: z.number().int().positive(),
+    combine_swatch: z.string().min(1),
+    sku: z.string().min(1),
     waitForResult: z.boolean().optional().default(false)
   })
 })

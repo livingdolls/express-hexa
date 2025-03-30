@@ -10,6 +10,7 @@ import { ProcessImageRequestSchema } from "../../core/validations/processImage.v
 import { RabbitMQAdapter } from "../services/rabbit-mq.adapter";
 import { ImageProcessingService } from "../../application/image-processing.usecase";
 import { LocalFileStorageAdapter } from "../services/local-file-storage.service";
+import { PrismaImageMetadataRepository } from "../repository/prisma-image-metadata.repository";
 
 export class Server {
     private app: express.Application;
@@ -32,11 +33,13 @@ export class Server {
         const imageProcessor = new CanvasImageProcessor();
         const processImageUseCase = new ProcessImageUseCase(imageProcessor);
         const fileStorage = new LocalFileStorageAdapter();
+        const imageRepository = new PrismaImageMetadataRepository();
 
         this.imageProcessingService = new ImageProcessingService(
             rabbitMQAdapter,
             processImageUseCase,
             fileStorage,
+            imageRepository,
         );
 
         await this.imageProcessingService.startProcessing();
