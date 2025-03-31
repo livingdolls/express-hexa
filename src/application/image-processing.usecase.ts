@@ -32,8 +32,6 @@ export class ImageProcessingService {
                     callbackQueue
                 } = message;
 
-                console.log(message);
-
                 try {
                     const imageBuffer = await this.processIamgeUseCase.execute(
                         colorOption, backgroundPath, overlayPath, dimension

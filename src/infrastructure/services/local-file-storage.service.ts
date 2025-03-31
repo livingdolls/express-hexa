@@ -61,7 +61,7 @@ export class LocalFileStorageAdapter implements FileStoragePort {
     }
 
     getVariantUrl(filename: string, size: number): string {
-        return `/uploads/${size}_${filename.replace(/\.[^/.]+$/, '.webp')}`;
+        return `/uploads/${size}_${filename.replace(/\.[^/.]+$/, '.png')}`;
     }
 
 }
