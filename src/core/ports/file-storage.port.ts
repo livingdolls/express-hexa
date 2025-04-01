@@ -6,4 +6,4 @@ export interface FileStoragePort {
     }>
     getImageUrl(filename: string): string;
     getVariantUrl(filename: string, size: number): string;
-}
+}``

@@ -10,19 +10,43 @@ export class RabbitMQAdapter implements MessageBrokerPort {
     constructor(private readonly url: string) {}
 
     async Connect(): Promise<void> {
-        this.connection = amqp.connect([this.url]);
+    try {
+        this.connection = amqp.connect(this.url);
+        console.log('Connected to RabbitMQ');
+
+        this.connection.on('close', (err) => {
+            console.error('Connection closed:', err?.message);
+        });
+
+        this.connection.on('error', (err) => {
+            console.error('Connection error:', err.message);
+        });
+
         this.channelWrapper = this.connection.createChannel({
             json: true,
-            setup: (channel: Channel) => channel.assertQueue(this.queueName, { durable: true })
+            setup: async (channel: Channel) => {
+                console.log('Setting up channel...');
+                await channel.assertQueue(this.queueName, { 
+                    durable: true 
+                });
+                console.log(`Queue ${this.queueName} ready in vhost /`);
+            }
         });
+
+        // Verifikasi queue setelah setup
+        await this.channelWrapper.waitForConnect();
+        console.log('Channel setup completed');
+    } catch (error) {
+        console.error('Connection failed:', error);
+        throw error;
     }
+}
 
     async PublishToQueue(queue: string, message: any): Promise<boolean> { 
-        console.log('queue', queue);
-        console.log('message', message);
         if (!this.channelWrapper) {
             throw new Error('Channel not initialized. Call Connect() first.');
         }
+
         return this.channelWrapper.sendToQueue(queue, message, { persistent: true });
     }
 

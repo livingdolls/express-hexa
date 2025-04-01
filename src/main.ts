@@ -1,5 +1,20 @@
 import { Server } from "./infrastructure/http/server";
+import { ensureDatabaseConnection } from "./utils/database";
 
-const server = new Server();
+async function bootstrap() {
+    try {
 
-server.start(3000)
+        await Promise.all([
+            ensureDatabaseConnection()
+        ])
+
+        const server = new Server();        
+        server.start(3000)
+    } catch(err) {
+        console.error('Failed to start application:', err);
+        process.exit(1);
+    }
+    
+}
+
+bootstrap();

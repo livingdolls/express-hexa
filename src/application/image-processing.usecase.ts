@@ -57,16 +57,16 @@ export class ImageProcessingService {
 
                     const secureUrl = this.fileStorage.getImageUrl(filename);
 
-                    const savedImage = this.imageMetadataRepository.saveImageMetadata({
-                        sku,
-                        colorOption,
-                        productIdMagento: product_id_magento,
-                        combineSwatch: combine_swatch,
-                        imgUrl: backgroundPath,
-                        imgOverlay: overlayPath,
-                        secureUrl,
-                        variants: variantsData,
-                    });
+                    // const savedImage = this.imageMetadataRepository.saveImageMetadata({
+                    //     sku,
+                    //     colorOption,
+                    //     productIdMagento: product_id_magento,
+                    //     combineSwatch: combine_swatch,
+                    //     imgUrl: backgroundPath,
+                    //     imgOverlay: overlayPath,
+                    //     secureUrl,
+                    //     variants: variantsData,
+                    // });
 
                     if(callbackQueue) {
                         await this.messageBroker.PublishToQueue(callbackQueue, {

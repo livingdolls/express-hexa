@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - app_network
+  
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mysql
+      - rabbitmq
+    volumes:
+      - ./uploads:/app/uploads
+    env_file:
+      - .env
+    networks:
+      - app_network
+
+  mysql:
+    image: mysql:8.1
+    environment:
+      - MYSQL_ROOT_PASSWORD=yurinahirate
+      - MYSQL_DATABASE=image_processor
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - app_network
+
+volumes:
+  mysql_data:
+  uploads:
+
+networks:
+  app_network:
+    driver: bridge
+    attachable: true
